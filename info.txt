@@ -1,0 +1,14 @@
+---- LCD I2C ----
+https://naylampmechatronics.com/blog/35_tutorial-lcd-con-i2c-controla-un-lcd-con-solo-dos-pines.html
+
+
+
+
+---- PIC 74HC165 ----
+http://domoticx.com/ic-74hc165-shift-register-input-8-bit/
+
+https://github.com/InfectedBytes/ArduinoShiftIn
+
+http://domoticx.com/wp-content/uploads/2020/01/SN74HC165-datasheet-Texas-Instruments.pdf
+
+https://dronebotworkshop.com/shift-registers/
