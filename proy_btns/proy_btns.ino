@@ -11,7 +11,7 @@
 LiquidCrystal_I2C lcd(0x27,20,4);  //
 // Columna y valor
 short col = 0;
-String value = 0;
+String value = "0";
 
 // Valores ascii
 short A = 65;
@@ -62,11 +62,11 @@ short goals [][2] = {
  * @param 3 → abajo
  * 
  */
-int btnsDir [] = {1, 2, 3, 4};
+int btnsDir [] = {2, 3, 4, 5};
 short len_btnsDir = 4;
 
 // Tiempo del partido, 0 = 1er tiempo, 1 = 2do tiempo
-bit timeMatch = 0;
+byte timeMatch = 0;
 
 int i, j;
 void setup() {
@@ -86,13 +86,13 @@ void setup() {
 
 // Podrias dejar el loop VACIO, para solo mostrar el Hola mundo del setup y no se borre
 void loop() {
-
+  click();
 }
 
 void click(){
   for(i = 0; i < len_btnsDir; i++){
-    if(digitalRead(btnsDir[i]){
-      checkDir(i)
+    if(digitalRead(btnsDir[i])){
+      checkDir(i);
     }
   }
 }
@@ -100,33 +100,33 @@ void click(){
 void checkDir(int check){
   switch(check){
       // Derecha
-      case btnsDir[0]:
+      case 2:
           col++;
           checkCol();
       break;
 
       // Izquierda
-      case btnsDir[1]:
+      case 3:
           col--;
           checkCol();
       break;
 
       // Arriba
-      case btnsDir[2]:
-          cord[col][3]++;
+      case 4:
+          coord[col][3]++;
           checkValue();
       break;
 
       // Abajo
-      case btnsDir[3]:
-          cord[col][3]--;
+      case 5:
+          coord[col][3]--;
           checkValue();
       break;
 
       default:
       break;
   }
-  printLcd(coord[col][0], coord[col][1], value)
+  printLcd(coord[col][0], coord[col][1], value);
 }
 
 void checkCol(){
@@ -149,7 +149,7 @@ void checkValue(){
     value = char(coord[col][3] + cero);
   }
   // Letra : o Alpha (?)
-  else if(cood[col][2] == 1{
+  else if(coord[col][2] == 1){
     if(A + coord[col][3] > Z){
       coord[col][3] = 0;
     }else if(coord[col][3] < 0){
@@ -207,8 +207,8 @@ void reset(){
    printLcd(6, 0, "1T 00:00");
    printLcd(coord[1][0], coord[1][1], "---");
    printLcd(coord[4][0], coord[4][1], "---");
-   printLcd(coord[len-2][0], coord[len-2][1], "0");
-   printLcd(coord[len-1][0], coord[len-1][1], "0");
+   printLcd(coord[len_coord-2][0], coord[len_coord-2][1], "0");
+   printLcd(coord[len_coord-1][0], coord[len_coord-1][1], "0");
 }
 
 /**
@@ -221,7 +221,7 @@ void printLcd(short x, short y, String msg){
   lcd.setCursor(x, y);
   lcd.print(msg);
 }
-
+/*
 void clock(){
     // si es primer tiempo → bitMatch = 0
     // Si es segundo tiempo → bitMatch = 1
@@ -242,3 +242,4 @@ void clock(){
         // PRINT
     }
 }
+*/
