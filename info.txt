@@ -12,3 +12,4 @@ https://github.com/InfectedBytes/ArduinoShiftIn
 http://domoticx.com/wp-content/uploads/2020/01/SN74HC165-datasheet-Texas-Instruments.pdf
 
 https://dronebotworkshop.com/shift-registers/
+
