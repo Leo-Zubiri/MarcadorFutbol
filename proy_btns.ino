@@ -17,6 +17,8 @@ short A = 65;
 short Z = 90;
 short cero = 48;
 short nueve = 57;
+//short parpadeo = 95; // 95 = _, 219 = █, 220 = ▄
+// cambiamos al metodo cursor() and nocursor() el cual parpadea y no parpadea en la posicion
 
 short len_coord = 9;
 short coord[][4] = {
@@ -32,6 +34,7 @@ short coord[][4] = {
   {15, 2, 1, 0}  // Goal 2nd Team
 };
 
+short len_times = 11;
 // Valores de tiempo por el cual puede ir cambiando el usuario
 short times [] = {2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45};
 

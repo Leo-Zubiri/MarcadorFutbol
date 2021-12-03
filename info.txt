@@ -1,6 +1,16 @@
 ---- LCD I2C ----
 https://naylampmechatronics.com/blog/35_tutorial-lcd-con-i2c-controla-un-lcd-con-solo-dos-pines.html
 
+https://github.com/johnrickman/LiquidCrystal_I2C
+
+Cursor()
+https://educarparaelcambio.com/arduino/reto-4-liquid-crystal-display-pantalla-lcd/
+
+https://www.arduino.cc/en/Tutorial/LibraryExamples/LiquidCrystalCursor
+
+clock
+https://www.youtube.com/watch?v=F9IVtKa8C7Q
+http://educ8s.tv/arduino-20x4-character-lcd/
 
 
 
