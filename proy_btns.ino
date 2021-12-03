@@ -11,7 +11,8 @@
 LiquidCrystal_I2C lcd(0x27,20,4);  //
 // Columna y valor
 short col = 0;
-short value = 0;
+String value = 0;
+
 // Valores ascii
 short A = 65;
 short Z = 90;
@@ -20,50 +21,67 @@ short nueve = 57;
 //short parpadeo = 95; // 95 = _, 219 = █, 220 = ▄
 // cambiamos al metodo cursor() and nocursor() el cual parpadea y no parpadea en la posicion
 
-short len_coord = 9;
-short coord[][4] = {
-  // Columna, Fila, (0 numeros, 1 alpha), Value
-  {10, 0, 1, 0}, // TIME
+/**
+ * @param Columna → [][0]
+ * @param Fila    → [][1]
+ * @param Tipo    → [][2] (0 nums, 1 alpha, 2 time)
+ * @param Valor   → [][3]
+ */
+short coord[][4] = {  
+  {10, 0, 2, 0}, // TIME
   {3,  1, 0, 0}, // 1st Team
   {4,  1, 0, 0},
   {5,  1, 0, 0},
   {14, 1, 0, 0}, // 2nd Team
   {15, 1, 0, 0},
-  {16, 1, 0, 0},
-  {4,  2, 1, 0}, // Goal 1st Team
-  {15, 2, 1, 0}  // Goal 2nd Team
+  {16, 1, 0, 0}
+  //{4,  2, 1, 0}, // Goal 1st Team
+  //{15, 2, 1, 0}  // Goal 2nd Team
 };
+short len_coord = 7;
 
-short len_times = 11;
 // Valores de tiempo por el cual puede ir cambiando el usuario
-short times [] = {2, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45};
+String times [] = {"02", "03", "05", "10", "15", "20", "25", "30", "35", "40", "45"};
+short len_times = 11;
 
-// Coordenadas de GOOOL de cada equipo
+/**
+ *  Coordenadas de GOOOL de cada equipo
+ * @param [0][] → Izquierda
+ * @param [1][] → Derecha
+ * 
+ */ 
 short goals [][2] = {
   {2, 3},
   {13, 3}    
 };
 
-// Areglo de botones {der, izq, arriba, abajo}
+/**
+ * @param 0 → der
+ * @param 1 → izq
+ * @param 2 → arriba
+ * @param 3 → abajo
+ * 
+ */
 int btnsDir [] = {1, 2, 3, 4};
+short len_btnsDir = 4;
 
 // Tiempo del partido, 0 = 1er tiempo, 1 = 2do tiempo
 bit timeMatch = 0;
 
 int i, j;
 void setup() {
-    Serial.begin(9600); 
-    // Inicializar el LCD
-    lcd.init();
-    
-    //Encender la luz de fondo.
-    lcd.backlight();     
-    reset();  
+  Serial.begin(9600); 
+  // Inicializar el LCD
+  lcd.init();
+  
+  //Encender la luz de fondo.
+  lcd.backlight();     
+  reset();  
 
-    // Establecemos los botones en modo de entrada        
-    for(i = 0; i < 4; i++){
-        pinMode(btnsDir[i], INPUT);
-    }
+  // Establecemos los botones en modo de entrada        
+  for(i = 0; i < len_btnsDir; i++){
+      pinMode(btnsDir[i], INPUT);
+  }
 }
 
 // Podrias dejar el loop VACIO, para solo mostrar el Hola mundo del setup y no se borre
@@ -72,55 +90,89 @@ void loop() {
 }
 
 void click(){
-    for(i = 0; i < 4; i++){
-        if(digitalRead(btnsDir[i]){
-            checkDir(i)
-        }
+  for(i = 0; i < len_btnsDir; i++){
+    if(digitalRead(btnsDir[i]){
+      checkDir(i)
     }
+  }
 }
 
-void checkDir(int i){
-    switch(i){
-        // Derecha
-        case 0:
-            col++;
-            checkCol();
-        break;
+void checkDir(int check){
+  switch(check){
+      // Derecha
+      case btnsDir[0]:
+          col++;
+          checkCol();
+      break;
 
-        // Izquierda
-        case 1:
-            col--;
-            checkCol();
-        break;
+      // Izquierda
+      case btnsDir[1]:
+          col--;
+          checkCol();
+      break;
 
-        // Arriba
-        case 2:
-            value++;
-            checkValue();
-        break;
+      // Arriba
+      case btnsDir[2]:
+          cord[col][3]++;
+          checkValue();
+      break;
 
-        // Abajo
-        case 3:
-            value--;
-            checkValue();
-        break;
+      // Abajo
+      case btnsDir[3]:
+          cord[col][3]--;
+          checkValue();
+      break;
 
-        default:
-        break;
-    }
+      default:
+      break;
+  }
+  printLcd(coord[col][0], coord[col][1], value)
 }
 
 void checkCol(){
-    if(col >= len_coord){
-        col = 0;
-    }else if(col < 0){
-        col = len_coord-1;
-    }
+  if(col >= len_coord){
+      col = 0;
+  }else if(col < 0){
+      col = len_coord-1;
+  }
 }
 
 void checkValue(){
+  // Numero
+  if(coord[col][2] == 0){
+    if(cero + coord[col][3] > nueve){
+      coord[col][3] = 0;
+    }else if(coord[col][3] < 0){
+      coord[col][3] = nueve - cero;
+    }
 
+    value = char(coord[col][3] + cero);
+  }
+  // Letra : o Alpha (?)
+  else if(cood[col][2] == 1{
+    if(A + coord[col][3] > Z){
+      coord[col][3] = 0;
+    }else if(coord[col][3] < 0){
+      coord[col][3] = Z - A;
+    }
+
+    value = char(coord[col][3] + A);
+  }
+
+  // Tiempo
+  else{
+    if(coord[col][3] >= len_times){
+      coord[col][3] = 0;
+    }else if(col < 0){
+      coord[col][3] = len_coord-1;
+    }
+
+    value = times[coord[col][3]];
+  }
+
+  
 }
+
 
 /*
 void joystickX(){
@@ -159,7 +211,12 @@ void reset(){
    printLcd(coord[len-1][0], coord[len-1][1], "0");
 }
 
-// x = columna    y = fila
+/**
+ * @param x → Columna ← →
+ * @param y → Fila ↓ ↑
+ * @param msg → Mensaje a imprimir
+ * 
+ */
 void printLcd(short x, short y, String msg){
   lcd.setCursor(x, y);
   lcd.print(msg);
