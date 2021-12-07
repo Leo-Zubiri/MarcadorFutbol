@@ -13,7 +13,7 @@ enum boton{arriba=3,abajo=4,izquierda=2,derecha=5,controlBtn=6};
 int btns[] = {izquierda, arriba, abajo, derecha, controlBtn};
 enum estados {editandoEquipos,equiposEditados,primerT};
 
-int i;
+int i; //
 short len_btnsDir = 5;
 short lastPressed;
 short posLetra = 0; 
